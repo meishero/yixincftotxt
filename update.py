@@ -8,7 +8,7 @@ def main():
 
     r = requests.get(
         API,
-        timeout=10
+        timeout=20
     )
 
     nodes = r.json()
@@ -23,10 +23,12 @@ def main():
             and n.get("region")
             and n.get("latency")
             and n.get("speed")
+            and n.get("time")
+            and n.get("carrier")
         ):
 
             result.append(
-                f"{n['ip']}#[{n['region']} {n['latency']} {n['speed']}]"
+                f"{n['ip']}#[{n['region']} {n['latency']} {n['speed']} {n['carrier']} {n['time']}]"
             )
 
 
