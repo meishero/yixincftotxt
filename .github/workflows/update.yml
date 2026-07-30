@@ -2,7 +2,7 @@ name: Update CF Nodes
 
 on:
   schedule:
-    - cron: "*/40 * * * *"
+    - cron: "17,47 * * * *"
 
   workflow_dispatch:
 
