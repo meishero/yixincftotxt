@@ -8,7 +8,7 @@ def main():
 
     r = requests.get(
         API,
-        timeout=20
+        timeout=10
     )
 
     nodes = r.json()
