@@ -21,8 +21,8 @@ def main():
         if (
             n.get("ip")
             and n.get("region")
-            and n.get("latency")
-            and n.get("speed")
+            and n.get("latency") is not None
+            and n.get("speed") is not None
             and n.get("time")
             and n.get("carrier")
         ):
@@ -34,9 +34,7 @@ def main():
 
     # 按速度降序
     result.sort(
-        key=lambda x: float(
-            x.split()[-1].replace("]", "")
-        ),
+        key=lambda x: float(x.split()[2]),
         reverse=True
     )
 
