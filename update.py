@@ -1,20 +1,26 @@
 import requests
+import re
 
 
 API = "https://ip.v2too.top/api/nodes"
 
+CF_IP_URL = "https://raw.githubusercontent.com/yuanxiawan/cfipv4db/refs/heads/main/high_score_ips.txt"
 
-def main():
+
+def update_nodes():
 
     r = requests.get(
         API,
         timeout=10
     )
 
+    r.raise_for_status()
+
     nodes = r.json()
 
 
     result = []
+
 
     for n in nodes:
 
@@ -48,6 +54,60 @@ def main():
         f.write(
             "\n".join(result)
         )
+
+
+
+def update_cf_ips():
+
+    r = requests.get(
+        CF_IP_URL,
+        timeout=10
+    )
+
+    r.raise_for_status()
+
+
+    lines = r.text.splitlines()
+
+
+    result = []
+
+
+    for line in lines:
+
+        # 去掉 # 前面的空格
+        line = re.sub(
+            r"\s+#",
+            "#",
+            line
+        )
+
+        # 删除行尾空格
+        line = line.rstrip()
+
+
+        if line:
+            result.append(line)
+
+
+    with open(
+        "ips.txt",
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        f.write(
+            "\n".join(result)
+        )
+
+
+
+def main():
+
+    update_nodes()
+
+    update_cf_ips()
+
 
 
 if __name__ == "__main__":
