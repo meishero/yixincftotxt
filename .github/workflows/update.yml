@@ -5,28 +5,46 @@ on:
     - cron: '7,39 * * * *'
   workflow_dispatch:
 
+
 permissions:
   contents: write
 
+
 jobs:
+
   update:
+
     runs-on: ubuntu-latest
 
+
     steps:
+
       - name: Checkout
         uses: actions/checkout@v5
+
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
 
       - name: Generate nodes
         run: |
           python3 update.py
 
+
       - name: Commit
         run: |
+
           git config --global user.name "github-actions"
+
           git config --global user.email "github-actions@github.com"
 
-          git add nodes.txt
 
-          git commit -m "update nodes" || exit 0
+          git add .
+
+
+          git commit -m "update" || exit 0
+
 
           git push
